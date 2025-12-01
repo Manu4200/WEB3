@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservar Espacio Municipal</title>
+
+  <!-- FullCalendar CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    form input[type="text"],
+    form select,
+    form textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    form input[type="file"] {
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    #btn-solicitar {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #btn-solicitar:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    #mensaje {
+      text-align: center;
+      font-size: 1.1em;
+      color: green;
+      margin-top: 20px;
+    }
+
+    #calendar {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .fc-event {
+      cursor: pointer;
+      /* Ajuste para imagen: la vamos a inyectar dinámicamente con eventContent */
+    }
+  </style>
+</head>
+<body>
