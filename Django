@@ -1,0 +1,20 @@
+fetch("/api/reservas/", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => {
+          if (!response.ok) throw new Error("Error al enviar solicitud");
+          return response.json();
+        })
+        .then(data => {
+          console.log("Respuesta del servidor:", data);
+          mensaje.textContent = "Solicitud enviada";
+          form.reset();
+          // recargar el calendario para incluir (o marcar) la nueva reserva si es aprobada más adelante
+          calendar.refetchEvents();
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          mensaje.textContent = "Hubo un problema al enviar la solicitud";
+        });
+      });
