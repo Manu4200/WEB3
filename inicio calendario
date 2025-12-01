@@ -1,0 +1,41 @@
+const calendarEl = document.getElementById("calendar");
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay"
+        },
+        navLinks: true,
+        nowIndicator: true,
+        weekNumbers: true,
+
+        // inyectar custom content (como imagen) dentro del evento
+        eventContent: function(arg) {
+          // arg.event.extendedProps debe tener propiedades como imagen, estado, solicitante, uso
+          const { imagen_url, estado, solicitante, uso } = arg.event.extendedProps;
+
+          const container = document.createElement("div");
+
+          // Si hay imagen, usar como fondo del mini-evento
+          if (imagen_url) {
+            const img = document.createElement("img");
+            img.src = imagen_url;
+            img.style.width = "100%";
+            img.style.height = "auto";
+            img.style.display = "block";
+            img.style.borderRadius = "4px";
+            container.appendChild(img);
+          }
+
+          // Poner también texto con nombre y tipo
+          const text = document.createElement("div");
+          text.innerHTML = `
+            <strong>${arg.event.title}</strong><br>
+            <small>${solicitante.nombre} — ${uso.tipo}</small><br>
+            <small>Estado: ${estado}</small>
+          `;
+          container.appendChild(text);
+
+          return { domNodes: [container] };
+        },
