@@ -1,0 +1,24 @@
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.getElementById("reserva-form");
+      const mensaje = document.getElementById("mensaje");
+
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        mensaje.textContent = "";
+
+        const nombre = document.getElementById("solicitante-nombre").value;
+        const uso = document.getElementById("uso-tipo").value;
+        const justificacion = document.getElementById("justificacion").value;
+        const imagenInput = document.getElementById("imagen-evento");
+        const imagenFile = imagenInput.files[0];
+
+        const formData = new FormData();
+        formData.append("nombre", nombre);
+        formData.append("uso", uso);
+        formData.append("justificacion", justificacion);
+        if (imagenFile) {
+          formData.append("imagen", imagenFile);
+        }
