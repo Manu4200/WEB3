@@ -1,0 +1,53 @@
+from django.db import models
+from django.core.validators import FileExtensionValidator
+
+class TipoUso(models.Model):
+    """Tipos de uso permitidos para los eventos"""
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField(blank=True)
+    
+    def str(self):
+        return self.nombre
+
+class EstadoReserva(models.Model):
+    """Estados posibles de una reserva"""
+    nombre = models.CharField(max_length=50)
+    color = models.CharField(max_length=20, default='#007bff')  # Color para el calendario
+    
+    def str(self):
+        return self.nombre
+
+class Solicitante(models.Model):
+    """Información del solicitante"""
+    nombre = models.CharField(max_length=200)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=20, blank=True)
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    
+    def str(self):
+        return self.nombre
+
+class Reserva(models.Model):
+    """Modelo principal para las reservas"""
+    titulo = models.CharField(max_length=200)
+    solicitante = models.ForeignKey(Solicitante, on_delete=models.CASCADE, related_name='reservas')
+    tipo_uso = models.ForeignKey(TipoUso, on_delete=models.CASCADE)
+    justificacion = models.TextField()
+    imagen = models.ImageField(
+        upload_to='eventos/',
+        blank=True,
+        null=True,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg'])]
+    )
+    fecha_inicio = models.DateTimeField()
+    fecha_fin = models.DateTimeField()
+    estado = models.ForeignKey(EstadoReserva, on_delete=models.CASCADE)
+    fecha_solicitud = models.DateTimeField(auto_now_add=True)
+    fecha_aprobacion = models.DateTimeField(null=True, blank=True)
+    observaciones = models.TextField(blank=True)
+    
+    def str(self):
+        return f"{self.titulo} - {self.solicitante.nombre}"
+    
+    class Meta:
+        ordering = ['-fecha_solicitud']
